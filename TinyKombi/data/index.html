@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ESP32 RC Control</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2>ESP32 R/C</h2>
+
+    <div class="container">
+        <div class="d-pad">
+            <div class="btn up" oncontextmenu="return false;">▲</div>
+            <div class="btn left" oncontextmenu="return false;">◀</div>
+            <div class="center-pad"></div>
+            <div class="btn right" oncontextmenu="return false;">▶</div>
+            <div class="btn down" oncontextmenu="return false;">▼</div>
+        </div>
+
+        <div class="actions">
+            <div class="action-row">
+                <div class="btn circle-btn btn-light" id="btn-light">Farol</div>
+            </div>
+            <div class="action-row">
+                <div class="btn circle-btn btn-horn" id="btn-horn">Buzina</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para enviar requisição ao ESP32 sem recarregar a página
+        function sendCommand(cmd) {
+            fetch('/control?cmd=' + cmd).catch(console.error);
+        }
+
+        // Configuração dos botões de movimento (Pressionar = Andar, Soltar = Parar)
+        const buttons = [
+            { select: '.up', cmd: 'F' },   // Forward
+            { select: '.down', cmd: 'B' }, // Backward
+            { select: '.left', cmd: 'L' }, // Left
+            { select: '.right', cmd: 'R' } // Right
+        ];
+
+        buttons.forEach(btn => {
+            const el = document.querySelector(btn.select);
+            
+            // Suporte para Touch (Celular)
+            el.addEventListener('touchstart', (e) => { e.preventDefault(); el.classList.add('active'); sendCommand(btn.cmd); });
+            el.addEventListener('touchend', (e) => { e.preventDefault(); el.classList.remove('active'); sendCommand('S'); }); // S = Stop
+
+            // Suporte para Mouse (PC)
+            el.addEventListener('mousedown', () => { sendCommand(btn.cmd); });
+            el.addEventListener('mouseup', () => { sendCommand('S'); });
+        });
+
+        // Botões Toggle (Farol) e Push (Buzina)
+        const lightBtn = document.getElementById('btn-light');
+        lightBtn.addEventListener('click', () => sendCommand('W')); // W = White Light Toggle
+
+        const hornBtn = document.getElementById('btn-horn');
+        hornBtn.addEventListener('touchstart', (e) => { e.preventDefault(); hornBtn.classList.add('active'); sendCommand('H_ON'); });
+        hornBtn.addEventListener('touchend', (e) => { e.preventDefault(); hornBtn.classList.remove('active'); sendCommand('H_OFF'); });
+        hornBtn.addEventListener('mousedown', () => sendCommand('H_ON'));
+        hornBtn.addEventListener('mouseup', () => sendCommand('H_OFF'));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+/* style.css */
+body {
+    background-color: #1a1a1a; /* Fundo escuro */
+    color: #eeeeee;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    user-select: none; /* Impede seleção de texto ao tocar */
+    overflow: hidden; /* Impede rolagem */
+}
+
+h2 { margin-bottom: 10px; color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 800px;
+    height: 80%;
+}
+
+/* --- D-PAD (Direcional Esquerdo) --- */
+.d-pad {
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px;
+    gap: 5px;
+}
+
+.btn {
+    background: #333;
+    border: 2px solid #555;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #000;
+    transition: all 0.1s;
+    touch-action: manipulation; /* Melhora resposta ao toque */
+}
+
+.btn:active, .btn.active {
+    box-shadow: 0 0 0 #000;
+    transform: translateY(4px);
+    background: #555;
+    border-color: #00d2ff;
+}
+
+/* Posicionamento do D-Pad */
+.up { grid-column: 2; grid-row: 1; border-top-left-radius: 5px; border-top-right-radius: 5px;}
+.left { grid-column: 1; grid-row: 2; border-top-left-radius: 5px; border-bottom-left-radius: 5px;}
+.center-pad { grid-column: 2; grid-row: 2; background: #222; border: none; box-shadow: none; pointer-events: none;}
+.right { grid-column: 3; grid-row: 2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;}
+.down { grid-column: 2; grid-row: 3; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;}
+
+/* --- Botões de Ação (Direita) --- */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.action-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.circle-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 0 #000;
+    text-transform: uppercase;
+}
+
+/* Cores específicas */
+.btn-horn { background-color: #b71c1c; } /* Vermelho escuro */
+.btn-light { background-color: #fbc02d; color: black; } /* Amarelo */
+
+/* Responsividade para Landscape */
+@media (max-height: 500px) {
+    .container { width: 95%; }
+    .btn { width: 50px; height: 50px; font-size: 20px;}
+    .d-pad { grid-template-columns: 50px 50px 50px; grid-template-rows: 50px 50px 50px;}
+}

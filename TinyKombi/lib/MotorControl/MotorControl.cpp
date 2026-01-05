@@ -1,5 +1,11 @@
-#include "MotorControl.h"
-#include <Arduino.h>
+/**
+ * @file MotorControl.cpp
+ * @author Hermes Neri (@hermesneri)
+ * @brief Library to control DC motors using H-Bridge
+ * @version 1.0
+ * @date Jan-2026
+ *
+ */
 
 #define FRONT 1
 #define BACK 2
@@ -8,6 +14,9 @@
 #define MOTOR_RIGHT 1
 #define MOTOR_LEFT 2
 #define MOTOR_BOTH 3
+
+#include "MotorControl.h"
+#include <Arduino.h>
 
 int MotorControl::pin_a = 0;
 int MotorControl::pin_b = 0;
@@ -29,6 +38,8 @@ bool MotorControl::setMotorPin(int pin_a_set, int pin_b_set, int pin_c_set, int 
   pinMode(pin_d, OUTPUT);
 
   init_dc_motor = true;
+  MotorControl::controlMotorDc(MOTOR_BOTH, STOP);
+  return true;
 }
 
 // direction: 0 - break, 1 - forward, 2 - backward

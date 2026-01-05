@@ -1,3 +1,12 @@
+/**
+ * @file MotorControl.h   
+ * @author Hermes Neri (@hermesneri)
+ * @brief Library to control DC motors using H-Bridge
+ * @version 1.0
+ * @date Jan-2026
+ * 
+ */
+
 #pragma once
 
 class MotorControl
